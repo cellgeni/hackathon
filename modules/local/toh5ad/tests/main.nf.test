@@ -10,7 +10,7 @@ nextflow_process {
         when {
             process {
                 """
-                input[0] = ['pbmc_1k_h5', file(params.test_data_base + "anndatautils/pbmc_1k.h5")]
+                input[0] = [[id: 'pbmc_1k_h5'], file(params.test_data_base + "toh5ad/pbmc_1k.h5")]
                 input[1] = "___"
                 """
             }
@@ -23,7 +23,7 @@ nextflow_process {
 
             // h5ad files
             assert process.out.h5ad
-            assert process.out.h5ad.get(0).get(0) ==~ "pbmc_1k_h5"
+            assert process.out.h5ad.get(0).get(0).id ==~ "pbmc_1k_h5"
             assert process.out.h5ad.get(0).get(1) ==~ ".*/pbmc_1k_h5.h5ad"
 
             // versions.yml
@@ -41,7 +41,7 @@ nextflow_process {
         when {
             process {
                 """
-                input[0] = ['pbmc_1k_mtx', file(params.test_data_base + "anndatautils/filtered_feature_bc_matrix")]
+                input[0] = [[id: 'pbmc_1k_mtx'], file(params.test_data_base + "toh5ad/filtered_feature_bc_matrix")]
                 input[1] = "___"
                 """
             }
@@ -54,7 +54,7 @@ nextflow_process {
 
             // h5ad files
             assert process.out.h5ad
-            assert process.out.h5ad.get(0).get(0) ==~ "pbmc_1k_mtx"
+            assert process.out.h5ad.get(0).get(0).id ==~ "pbmc_1k_mtx"
             assert process.out.h5ad.get(0).get(1) ==~ ".*/pbmc_1k_mtx.h5ad"
 
             // versions.yml
@@ -75,8 +75,8 @@ nextflow_process {
             process {
                 """
                 input[0] = Channel.fromList([
-                    ['pbmc_1k_h5', file(params.test_data_base + "anndatautils/pbmc_1k.h5")],
-                    ['pbmc_1k_mtx', file(params.test_data_base + "anndatautils/filtered_feature_bc_matrix")]
+                    [[id: 'pbmc_1k_h5'], file(params.test_data_base + "toh5ad/pbmc_1k.h5")],
+                    [[id: 'pbmc_1k_mtx'], file(params.test_data_base + "toh5ad/filtered_feature_bc_matrix")]
                 ])
                 input[1] = Channel.fromList(["___", "___"])
                 """
