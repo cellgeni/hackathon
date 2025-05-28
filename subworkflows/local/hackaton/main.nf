@@ -1,24 +1,5 @@
 include { TOH5AD } from '../../../modules/local/toh5ad'
 
-process ToH5ad {
-    tag "Converting ${sample}'s file to .h5ad"
-    container "quay.io/cellgeni/metacells-python:latest"
-    publishDir "${params.output_dir}/${sample}", mode: 'copy', overwrite: true
-    input:
-        tuple val(sample), path(input, name: 'input/*')
-        val(delimiter)
-    output:
-        tuple val(sample), path("${sample}.h5ad")
-    script:
-        """
-        convert_to_h5ad.py \
-            --input ${input} \
-            --sample_id ${sample} \
-            ${delimiter ? "--delimiter ${delimiter}" : ""} \
-            --output ${sample}.h5ad
-        """
-}
-
 process AttachCellMetadata {
     tag "Attaching cell metadata to .obs section of AnnData object for ${sample}"
     container "quay.io/cellgeni/metacells-python:latest"
