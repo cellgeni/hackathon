@@ -1,4 +1,4 @@
-include { TOH5AD } from '../../../modules/local/toh5ad'
+include { TOH5AD } from '../../../modules/sanger/toh5ad'
 
 process AttachCellMetadata {
     tag "Attaching cell metadata to .obs section of AnnData object for ${sample}"
