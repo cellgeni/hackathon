@@ -7,7 +7,7 @@
         "sanger": {
           "toh5ad": {
             "branch": "hackaton-toh5ad",
-            "git_sha": "47b9f835b1e498234d1ba90c496191009d8d3e1a",
+            "git_sha": "3c767c373f57b08f8cf3da8e1a54133c2e9a408f",
             "installed_by": ["modules"]
           }
         }
