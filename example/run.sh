@@ -1,8 +1,8 @@
 #!/bin/zsh
 
 sample_sheet="example/sample_sheet.csv"
-metadata="example/metadata_splited.csv"
-embedding="example/projection.csv"
+metadata="./example/metadata_splited.csv"
+embedding="./example/projection.csv"
 delimiter="__"
 
 nextflow run main.nf \
@@ -12,5 +12,4 @@ nextflow run main.nf \
     --method "umap" \
     --vis_label "celltype" \
     --embedding $embedding \
-    --embedding_name "tsne" \
-    -resume
+    --embedding_name "tsne"
