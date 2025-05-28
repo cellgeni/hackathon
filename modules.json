@@ -1,0 +1,17 @@
+{
+  "name": "cellgeni/hackaton",
+  "homePage": "https://github.com/cellgeni/hackaton",
+  "repos": {
+    "https://github.com/cellgeni/nf-modules.git": {
+      "modules": {
+        "sanger": {
+          "toh5ad": {
+            "branch": "hackaton-toh5ad",
+            "git_sha": "47b9f835b1e498234d1ba90c496191009d8d3e1a",
+            "installed_by": ["modules"]
+          }
+        }
+      }
+    }
+  }
+}
