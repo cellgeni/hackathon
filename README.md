@@ -2,7 +2,7 @@
 
 Running the pipeline:
 
-```
+```bash
 sample_sheet="example/sample_sheet.csv"
 metadata="example/metadata_splited.csv"
 embedding="example/projection.csv"
