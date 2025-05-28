@@ -6,7 +6,7 @@ workflow {
     files = Channel.fromPath(params.sample_sheet, checkIfExists: true)
                    .splitCsv(header: true, sep: ',')
                    .map { row ->
-                       tuple(row.sample_id, file(row.filename))
+                       tuple([id: row.sample_id], file(row.filename))
                    }
 
     // Read metadata and embedding files

@@ -1,3 +1,5 @@
+include { TOH5AD } from '../../../modules/local/toh5ad'
+
 process ToH5ad {
     tag "Converting ${sample}'s file to .h5ad"
     container "quay.io/cellgeni/metacells-python:latest"
@@ -144,10 +146,14 @@ workflow HACKATON {
 
     main:
 
-    h5ad_files = ToH5ad(
+    h5ad_files = TOH5AD(
         files,
         delimiter ? delimiter : ""
-        )
+        ).h5ad
+    
+    h5ad_files = h5ad_files.map { meta, h5ad ->
+        tuple(meta.id, h5ad)
+    }
     
     // Attach cell metadata to the .obs section of the AnnData object
     metadata_files = AttachCellMetadata(
