@@ -1,4 +1,5 @@
 include { TOH5AD } from '../../../modules/sanger/toh5ad'
+include { EMBEDDING } from '../../../modules/local/embedding'
 
 process AttachCellMetadata {
     tag "Attaching cell metadata to .obs section of AnnData object for ${sample}"
@@ -40,31 +41,6 @@ process ProcessGex {
             ${hvg_flavor ? "--hvg_flavor ${hvg_flavor}" : ""} \
             ${n_top_genes ? "--n_top_genes ${n_top_genes}" : ""} \
             --output ${sample}_processed.h5ad
-        """
-}
-
-process Embedding {
-    tag "Embedding GEX data for ${sample}"
-    container "quay.io/cellgeni/metacells-python:latest"
-    publishDir "${params.output_dir}/${sample}", mode: 'copy', overwrite: true
-    input:
-        tuple val(sample), path(h5ad_file, name: 'input/*')
-        val(method)
-        val(vis_label)
-    output:
-        tuple val(sample), path("${sample}_${method}.h5ad"), emit: h5ad
-        path "*.npy", emit: embedding
-        tuple path("*pdf"), path("*png"), emit: plots
-    script:
-        """
-        calculate_embedding.py \
-            --h5ad_file ${h5ad_file} \
-            --sample_id ${sample} \
-            --method ${method} \
-            ${vis_label ? "--vis_label ${vis_label}" : ""} \
-            --output ${sample}_${method}.h5ad \
-            --neighors_file neighbors.npy \
-            --embedding_file embedding.npy
         """
 }
 
@@ -152,11 +128,18 @@ workflow HACKATON {
     )
 
     // Embed GEX data
-    embedded_files = Embedding(
+    processed_gex_files = processed_gex_files.map { sample, h5ad ->
+        tuple([id: sample], h5ad)
+    }
+    embedded_files = EMBEDDING(
         processed_gex_files,
         method,
         vis_label ? vis_label : ""
     ).h5ad
+
+    embedded_files = embedded_files.map { meta, h5ad ->
+        tuple(meta.id, h5ad)
+    }
 
     // Attach embedding to the .obs section of the AnnData object
     tsne_files = AttachEmbedding(
