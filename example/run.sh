@@ -1,8 +1,8 @@
-#!/bin/zsh
+#!/bin/bash
 
-sample_sheet="example/sample_sheet.csv"
-metadata="example/metadata_splited.csv"
-embedding="example/projection.csv"
+sample_sheet="/lustre/scratch127/cellgen/cellgeni/aljes/hackathon/example/sample_sheet.csv"
+metadata="/lustre/scratch127/cellgen/cellgeni/aljes/hackathon/example/metadata_splited.csv"
+embedding="/lustre/scratch127/cellgen/cellgeni/aljes/hackathon/example/projection.csv"
 delimiter="__"
 
 nextflow run main.nf \
