@@ -1,9 +1,8 @@
-
-nextflow.enable.dsl=2
+include { ADATA_ATTACHCELLMETADATA } from './modules/local/adata/attachcellmetadata'
 
 process ToH5ad {
     tag "Converting ${sample}'s file to .h5ad"
-    container "quay.io/cellgeni/metacells-python:latest"
+    container "docker://quay.io/cellgeni/metacells-python:latest"
     publishDir "${params.output_dir}/${sample}", mode: 'copy', overwrite: true
     input:
         tuple val(sample), path(input, name: 'input/*')
@@ -22,7 +21,7 @@ process ToH5ad {
 
 process AttachCellMetadata {
     tag "Attaching cell metadata to .obs section of AnnData object for ${sample}"
-    container "quay.io/cellgeni/metacells-python:latest"
+    container "docker://quay.io/cellgeni/metacells-python:latest"
     publishDir "${params.output_dir}/${sample}", mode: 'copy', overwrite: true
     input:
         tuple val(sample), path(h5ad, name: 'input/*')
@@ -43,7 +42,7 @@ process AttachCellMetadata {
 
 process ProcessGex {
     tag "Processing GEX data for ${sample}"
-    container "quay.io/cellgeni/metacells-python:latest"
+    container "docker://quay.io/cellgeni/metacells-python:latest"
     publishDir "${params.output_dir}/${sample}", mode: 'copy', overwrite: true
     input:
         tuple val(sample), path(h5ad_file, name: 'input/*')
@@ -65,7 +64,7 @@ process ProcessGex {
 
 process Embedding {
     tag "Embedding GEX data for ${sample}"
-    container "quay.io/cellgeni/metacells-python:latest"
+    container "docker://quay.io/cellgeni/metacells-python:latest"
     publishDir "${params.output_dir}/${sample}", mode: 'copy', overwrite: true
     input:
         tuple val(sample), path(h5ad_file, name: 'input/*')
@@ -90,7 +89,7 @@ process Embedding {
 
 process AttachEmbedding {
     tag "Attaching embedding to .obs section of AnnData object for ${sample}"
-    container "quay.io/cellgeni/metacells-python:latest"
+    container "docker://quay.io/cellgeni/metacells-python:latest"
     publishDir "${params.output_dir}/${sample}", mode: 'copy', overwrite: true
     input:
         tuple val(sample), path(h5ad_file, name: 'input/*')
@@ -116,7 +115,7 @@ process AttachEmbedding {
 
 process ConcatAnndata {
     tag "Concatenating AnnData objects for ${sample}"
-    container "quay.io/cellgeni/metacells-python:latest"
+    container "docker://quay.io/cellgeni/metacells-python:latest"
     publishDir "${params.output_dir}", mode: 'copy', overwrite: true
     input:
         tuple val(sample), path(anndata, name: 'input/*')
