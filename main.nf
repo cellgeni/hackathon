@@ -3,7 +3,7 @@ nextflow.enable.dsl=2
 
 process ToH5ad {
     tag "Converting ${sample}'s file to .h5ad"
-    container "quay.io/cellgeni/metacells-python:latest"
+    container "quay.io/cellgeni/toh5ad:latest"
     publishDir "${params.output_dir}/${sample}", mode: 'copy', overwrite: true
     input:
         tuple val(sample), path(input, name: 'input/*')

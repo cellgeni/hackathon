@@ -84,7 +84,7 @@ def main() -> None:
         logging.info("Loading 10x mtx file to AnnData object")
         adata = sc.read_10x_mtx(
             args.input,
-            var_names="gene_symbols",
+            var_names="gene_ids",
             gex_only=True,
         )
     else:
