@@ -145,11 +145,12 @@ workflow {
         )
     
     // Attach cell metadata to the .obs section of the AnnData object
-    metadata_files = AttachCellMetadata(
-        h5ad_files,
-        params.metadata,
-        params.barcode_column
+    adata = h5ad_files.map { sample, h5ad -> tuple([id: sample], h5ad) }
+    ADATA_ATTACHCELLMETADATA(
+        adata,
+        file(params.metadata, checkIfExists: true, type: 'file')
     )
+    metadata_files = ADATA_ATTACHCELLMETADATA.out.h5ad.map { meta, h5ad -> tuple(meta.id, h5ad) }
 
     // Process GEX data
     processed_gex_files = ProcessGex(
@@ -188,4 +189,7 @@ workflow {
     concatenated_files = ConcatAnndata(
         objects.combine_objects.transpose().toList()
     )
+
+    // Collect version files
+    version_files = ADATA_ATTACHCELLMETADATA.out.versions.first()
 }
