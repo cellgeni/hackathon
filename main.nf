@@ -1,4 +1,4 @@
-include { ADATA_ATTACHCELLMETADATA } from './modules/local/adata/attachcellmetadata'
+include { ADATA_ATTACHCELLMETADATA } from './modules/sanger-cellgeni/adata/attachcellmetadata' 
 
 process ToH5ad {
     tag "Converting ${sample}'s file to .h5ad"

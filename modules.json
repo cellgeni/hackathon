@@ -1,0 +1,17 @@
+{
+  "name": "cellgeni/hackaton",
+  "homePage": "https://github.com/cellgeni/hackaton",
+  "repos": {
+    "https://github.com/cellgeni/nf-modules.git": {
+      "modules": {
+        "sanger-cellgeni": {
+          "adata/attachcellmetadata": {
+            "branch": "atachmetacells",
+            "git_sha": "d0cf0e12c21e18e65c309c71fe3074f9236986c3",
+            "installed_by": ["modules"]
+          }
+        }
+      }
+    }
+  }
+}

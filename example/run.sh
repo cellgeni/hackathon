@@ -12,5 +12,4 @@ nextflow run main.nf \
     --method "umap" \
     --vis_label "celltype" \
     --embedding $embedding \
-    --embedding_name "tsne" \
-    -resume
+    --embedding_name "tsne"
